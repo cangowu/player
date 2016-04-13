@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>视频播放</title>
+</head>
+<body>
+
+<embed allowscriptaccess="always" allowfullscreen="true" quality="high" bgcolor="#FFF" wmode="transparent"
+       src="ckplayer/ckplayer.swf" flashvars="f=../FrontEnd.mp4&amp;c=0&amp;b=1"
+       width="600" height="400" align="left"
+       type="application/x-shockwave-flash">
+
+
+    <script>
+
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if (/safari/.test(userAgent) && /mac/.test(userAgent)) {
+
+            var domEmbeds = document.getElementsByTagName('embed');
+            for (var i = 0; i < domEmbeds.length; i++) {
+                var domEmbed = domEmbeds[i];
+                var sFlashvars = domEmbed.getAttribute('flashvars'),
+                        sUrl = sFlashvars.substring(2, sFlashvars.indexOf('&')),
+                        sWidth = domEmbed.getAttribute('width'),
+                        sHeight = domEmbed.getAttribute('height'),
+                        sAlign = domEmbed.getAttribute('align');
+
+                var domVideo = document.createElement('video');
+                domVideo.setAttribute('width', sWidth);
+                domVideo.setAttribute('height', sHeight);
+                domVideo.setAttribute('align', sAlign);
+                domVideo.setAttribute('controls', 'controls');
+                domVideo.setAttribute('autoplay', 'autoplay');
+
+                var domSource = document.createElement('source');
+                domSource.setAttribute('src', sUrl);
+                domSource.setAttribute('type', 'video/mp4');
+
+                domVideo.appendChild(domSource);
+
+                domEmbed.parentNode.insertBefore(domVideo, domEmbed);
+                domEmbed.parentNode.removeChild(domEmbed);
+
+            }
+        }
+
+    </script>
+</body>
+</html>
